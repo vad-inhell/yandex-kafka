@@ -1,0 +1,19 @@
+# команда создания топика
+docker exec -it kafka1 kafka-topics.sh --bootstrap-server kafka1:9092,kafka2:9092,kafka3:9092 --create --topic my-topic --partitions 3 --replication-factor 2
+
+# инф-ция о топике
+docker exec -it kafka1 kafka-topics.sh --describe --topic my-topic --bootstrap-server kafka1:9092,kafka2:9092,kafka3:9092
+
+# вывод:
+Topic: my-topic	TopicId: XyZ123AbC456DeF789	PartitionCount: 3	ReplicationFactor: 2	Configs: 
+	Topic: my-topic	Partition: 0	Leader: 1	Replicas: 1,2	Isr: 1,2
+	Topic: my-topic	Partition: 1	Leader: 2	Replicas: 2,3	Isr: 2,3
+	Topic: my-topic	Partition: 2	Leader: 3	Replicas: 3,1	Isr: 3,1
+
+
+# расшифровка вывода:
+PartitionCount: 3 сообщения будут распределяться по 3-м партициям
+ReplicationFactor: 2 каждая партиция имеет 2 копии на разных брокерах
+Leader: узел, который в данный момент обрабатывает чтение/запись для этой партиции
+Replicas: список узлов, хранящих копию этой партиции
+Isr (In-Sync Replicas): список реплик, которые сейчас активны и синхронизированы с лидером гарантия отказоустойчивости
