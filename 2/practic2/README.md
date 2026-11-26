@@ -61,18 +61,27 @@ docker compose up --build -d
 
 ### отправка 5 сообщений
 echo '{"user_id": "ivan", "recipient_id": "vova", "message": "Привет!", "timestamp": 1700000000000}' | docker exec -i kafka kafka-console-producer.sh --bootstrap-server kafka:9092 --topic messages
+
 echo '{"user_id": "ivan", "recipient_id": "alex", "message": "Как дела?", "timestamp": 1700000001000}' | docker exec -i kafka kafka-console-producer.sh --bootstrap-server kafka:9092 --topic messages
+
 echo '{"user_id": "vova", "recipient_id": "ivan", "message": "Нормально", "timestamp": 1700000002000}' | docker exec -i kafka kafka-console-producer.sh --bootstrap-server kafka:9092 --topic messages
+
 echo '{"user_id": "ivan", "recipient_id": "vova", "message": "Ещё раз привет", "timestamp": 1700000003000}' | docker exec -i kafka kafka-console-producer.sh --bootstrap-server kafka:9092 --topic messages
+
 echo '{"user_id": "alex", "recipient_id": "ivan", "message": "Добрый день", "timestamp": 1700000004000}' | docker exec -i kafka kafka-console-producer.sh --bootstrap-server kafka:9092 --topic messages
 
 ### проверка работы
 docker exec -it ksqldb-cli ksql http://ksqldb-server:8088
+
 и выполняем: 
-SHOW TABLES; # смотрим таблицы - список табилц
-SELECT * FROM total_messages_count EMIT CHANGES; # общее количество отправленных сообщений - TOTAL_COUNT = 5
-SELECT * FROM unique_recipients_count EMIT CHANGES; # число уникальных получателей - UNIQUE_RECIPIENTS = 3
-SELECT * FROM user_statistics EMIT CHANGES; # статистика по пользователям
+
+SHOW TABLES;  смотрим таблицы - список табилц
+
+SELECT * FROM total_messages_count EMIT CHANGES;  общее количество отправленных сообщений - TOTAL_COUNT = 5
+
+SELECT * FROM unique_recipients_count EMIT CHANGES;  число уникальных получателей - UNIQUE_RECIPIENTS = 3
+
+SELECT * FROM user_statistics EMIT CHANGES;  статистика по пользователям
 
 
 
