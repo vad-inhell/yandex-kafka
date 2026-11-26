@@ -63,22 +63,28 @@ Docker-compose файл, который развернёт инфраструк�
 ## запуск
 
 1 сборка и запуск инфры
+
 docker compose up --build -d
 
 2 доабвление , отправка сообщений, блокировка
+
 chmod +x send_test.sh; ./send_test.sh
 
 3 смотрим логи после добавления слов/отправки сообщений/блокировки
+
 docker copmpose logs -f faust-app
 
 4 json-payloads
 добавить запрещенное слово топик banned_words
+
 {"word": "дурак", "action": "add"}
 
 заблокировать пользователя топик blocked_users
+
 {"user": "ivan", "blocked": "alex", "action": "block"}
 
 отправить сообщение топик messages
+
 {"from_user": "vova", "to_user": "ivan", "text": "Привет! Ты дурак!"}
 
 
